@@ -2,6 +2,8 @@ const express = require('express');
 const webPush = require('web-push');
 const bodyParser = require('body-parser');
 const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -11,8 +13,9 @@ app.use(bodyParser.json());
 ========================= */
 
 // 🔐 SUAS CHAVES VAPID
-const publicVapidKey = 'BPdCV380_JJmNoUz06DTVU-Z9FRwbTzJj-ihwjssonLsH_n19RN7OTszAeJ1T9HC1x8EzM07-wLNZ0L-e2AbNLw';
-const privateVapidKey = 'kguaxcvAx29Q7uH1MNtxYkYVX8wZHfAm1QWu-Dw_NVA';
+const publicVapidKey = process.env.VAPID_PUBLIC_KEY;
+const privateVapidKey = process.env.VAPID_PRIVATE_KEY;
+
 
 webPush.setVapidDetails(
   'mailto:jeanldev@hotmail.com',
@@ -22,8 +25,8 @@ webPush.setVapidDetails(
 
 // 🗄️ SUPABASE
 const supabase = createClient(
-  'https://ctqvqftwplpgviavcevn.supabase.co',
-  'sb_secret_uM_e67iGVaL9Iv_zgNiIbA_G-_6cmCB'
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_KEY
 );
 
 /* =========================
